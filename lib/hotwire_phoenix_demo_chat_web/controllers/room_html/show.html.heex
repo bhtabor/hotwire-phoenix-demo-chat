@@ -1,0 +1,24 @@
+<.header>
+  Room <%= @room.id %>
+  <:subtitle>This is a room record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/rooms/#{@room.id}/messages/new"}>
+      <.button>New Message</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @room.name %></:item>
+</.list>
+
+<.table id="messages" rows={@room.messages}>
+  <:col :let={message} label="Messages"><%= message.content %></:col>
+  <:action :let={message}>
+    <.link href={~p"/messages/#{message}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.back navigate={~p"/rooms"}>Back to rooms</.back>

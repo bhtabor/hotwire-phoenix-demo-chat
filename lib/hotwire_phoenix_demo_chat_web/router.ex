@@ -18,6 +18,11 @@ defmodule HotwirePhoenixDemoChatWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    resources "/rooms", RoomController do
+      resources "/messages", MessageController, only: [:new, :create]
+    end
+    resources "/messages", MessageController, only: [:delete]
   end
 
   # Other scopes may use custom stacks.
