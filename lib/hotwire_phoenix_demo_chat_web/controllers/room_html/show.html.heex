@@ -1,16 +1,18 @@
-<.header>
-  Room <%= @room.id %>
-  <:subtitle>This is a room record from your database.</:subtitle>
-  <:actions>
-    <.link href={~p"/rooms/#{@room.id}/messages/new"}>
-      <.button>New Message</.button>
-    </.link>
-  </:actions>
-</.header>
+<.turbo_frame id="room">
+  <.header>
+    Room <%= @room.id %>
+    <:subtitle>This is a room record from your database.</:subtitle>
+    <:actions>
+      <.link href={~p"/rooms/#{@room}/edit"}>
+        <.button>Edit room</.button>
+      </.link>
+    </:actions>
+  </.header>
 
-<.list>
-  <:item title="Name"><%= @room.name %></:item>
-</.list>
+  <.list>
+    <:item title="Name"><%= @room.name %></:item>
+  </.list>
+</.turbo_frame>
 
 <.table id="messages" rows={@room.messages}>
   <:col :let={message} label="Messages"><%= message.content %></:col>
@@ -20,5 +22,7 @@
     </.link>
   </:action>
 </.table>
+
+<.turbo_frame id="new_message" src={~p"/rooms/#{@room.id}/messages/new"} />
 
 <.back navigate={~p"/rooms"}>Back to rooms</.back>

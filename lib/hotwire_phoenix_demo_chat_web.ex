@@ -27,6 +27,7 @@ defmodule HotwirePhoenixDemoChatWeb do
       import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+      import HotwirePhoenixDemoChatWeb.Turbo.Router
     end
   end
 
@@ -85,6 +86,7 @@ defmodule HotwirePhoenixDemoChatWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import HotwirePhoenixDemoChatWeb.CoreComponents
+      import HotwirePhoenixDemoChatWeb.Turbo.Components
       import HotwirePhoenixDemoChatWeb.Gettext
 
       # Shortcut for generating JS commands

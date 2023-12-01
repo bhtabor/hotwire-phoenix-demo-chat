@@ -553,6 +553,7 @@ defmodule HotwirePhoenixDemoChatWeb.CoreComponents do
       <.link
         navigate={@navigate}
         class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
+        data-turbo="false"
       >
         <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
         <%= render_slot(@inner_block) %>

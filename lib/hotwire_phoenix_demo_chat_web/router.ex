@@ -8,6 +8,7 @@ defmodule HotwirePhoenixDemoChatWeb.Router do
     plug :put_root_layout, html: {HotwirePhoenixDemoChatWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :remove_turbo_frame_layouts
   end
 
   pipeline :api do
