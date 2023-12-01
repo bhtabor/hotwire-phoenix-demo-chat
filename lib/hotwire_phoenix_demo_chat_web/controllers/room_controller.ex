@@ -22,7 +22,9 @@ defmodule HotwirePhoenixDemoChatWeb.RoomController do
         |> redirect(to: ~p"/rooms/#{room}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :new, changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(:new, changeset: changeset)
     end
   end
 
@@ -47,7 +49,9 @@ defmodule HotwirePhoenixDemoChatWeb.RoomController do
         |> redirect(to: ~p"/rooms/#{room}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :edit, room: room, changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(:edit, room: room, changeset: changeset)
     end
   end
 

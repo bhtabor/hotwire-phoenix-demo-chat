@@ -8,6 +8,7 @@ defmodule HotwirePhoenixDemoChatWeb.Router do
     plug :put_root_layout, html: {HotwirePhoenixDemoChatWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :remove_turbo_frame_layout
   end
 
   pipeline :api do
@@ -44,6 +45,13 @@ defmodule HotwirePhoenixDemoChatWeb.Router do
 
       live_dashboard "/dashboard", metrics: HotwirePhoenixDemoChatWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
+    end
+  end
+
+  defp remove_turbo_frame_layout(conn, _opts) do
+    case get_req_header(conn, "turbo-frame") do
+      [] -> conn
+      _ -> conn |> put_layout(false)
     end
   end
 end

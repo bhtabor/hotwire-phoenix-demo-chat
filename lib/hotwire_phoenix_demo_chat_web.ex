@@ -85,6 +85,7 @@ defmodule HotwirePhoenixDemoChatWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import HotwirePhoenixDemoChatWeb.CoreComponents
+      import HotwirePhoenixDemoChatWeb.TurboComponents
       import HotwirePhoenixDemoChatWeb.Gettext
 
       # Shortcut for generating JS commands
