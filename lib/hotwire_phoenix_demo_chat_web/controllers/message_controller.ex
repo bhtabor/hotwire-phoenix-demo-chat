@@ -1,5 +1,6 @@
 defmodule HotwirePhoenixDemoChatWeb.MessageController do
   use HotwirePhoenixDemoChatWeb, :controller
+  plug :accepts, ["html", "turbo_stream"] when action in [:create]
 
   alias HotwirePhoenixDemoChat.Chat
   alias HotwirePhoenixDemoChat.Chat.Message
@@ -17,9 +18,17 @@ defmodule HotwirePhoenixDemoChatWeb.MessageController do
         |> redirect(to: ~p"/rooms/#{message.room_id}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(:new, changeset: changeset)
+        case get_format(conn) do
+          "turbo_stream" ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> render(:new_turbo_stream, changeset: changeset)
+
+          _ ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> render(:new, changeset: changeset)
+        end
     end
   end
 

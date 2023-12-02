@@ -24,4 +24,25 @@ defmodule HotwirePhoenixDemoChatWeb.Turbo.Components do
     </turbo-frame>
     """
   end
+
+  attr :action, :string, values: ["append", "prepend", "replace", "update", "remove", "before", "after"], required: true
+  attr :target, :string
+  attr :targets, :string
+  slot :inner_block
+
+  def turbo_stream(assigns) do
+    extra = assigns_to_attributes(assigns, [:action])
+    assigns = assign(assigns, :extra, extra)
+
+    ~H"""
+    <turbo-stream
+      action={@action}
+      {@extra}
+    >
+      <template>
+        <%= render_slot(@inner_block) %>
+      </template>
+    </turbo-stream>
+    """
+  end
 end

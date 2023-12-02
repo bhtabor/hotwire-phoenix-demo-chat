@@ -40,7 +40,7 @@ defmodule HotwirePhoenixDemoChatWeb do
   def controller do
     quote do
       use Phoenix.Controller,
-        formats: [:html, :json],
+        formats: [:html, :json, turbo_stream: "HTML"],
         layouts: [html: HotwirePhoenixDemoChatWeb.Layouts]
 
       import Plug.Conn
