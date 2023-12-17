@@ -33,6 +33,9 @@ defmodule HotwirePhoenixDemoChatWeb do
   def channel do
     quote do
       use Phoenix.Channel
+
+      import Phoenix.Template, only: [render_to_string: 4]
+      import HotwirePhoenixDemoChatWeb.Channel
     end
   end
 

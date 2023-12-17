@@ -1,3 +1,5 @@
+<.turbo_channel_stream_source channel={"room:#{@room.id}"} />
+
 <.turbo_frame id="room">
   <.header>
     Room <%= @room.id %>
@@ -14,7 +16,7 @@
   </.list>
 </.turbo_frame>
 
-<.table id="messages" rows={@room.messages}>
+<.table id="messages" rows={@room.messages} row_id={fn message -> "message-#{message.id}" end}>
   <:col :let={message} label="Messages"><%= message.content %></:col>
   <:action :let={message}>
     <.link href={~p"/messages/#{message}"} method="delete" data-confirm="Are you sure?">

@@ -45,4 +45,18 @@ defmodule HotwirePhoenixDemoChatWeb.TurboComponents do
     </turbo-stream>
     """
   end
+
+  alias HotwirePhoenixDemoChatWeb.{Channel, Endpoint}
+
+  attr :channel, :string, required: true
+
+  def turbo_channel_stream_source(assigns) do
+    ~H"""
+    <turbo-channel-stream-source channel={@channel} signed-channel={signed_channel(@channel)} />
+    """
+  end
+
+  defp signed_channel(channel) do
+    Channel.sign(Endpoint, channel)
+  end
 end

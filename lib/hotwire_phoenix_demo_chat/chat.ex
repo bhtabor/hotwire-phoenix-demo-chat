@@ -140,6 +140,12 @@ defmodule HotwirePhoenixDemoChat.Chat do
     |> Repo.insert()
   end
 
+  def create_and_broadcast_message(attrs \\ %{}) do
+    attrs
+    |> create_message()
+    |> broadcast_message(:message_created)
+  end
+
   @doc """
   Deletes a message.
 
@@ -156,6 +162,12 @@ defmodule HotwirePhoenixDemoChat.Chat do
     Repo.delete(message)
   end
 
+  def delete_and_broadcast_message(%Message{} = message) do
+    message
+    |> delete_message()
+    |> broadcast_message(:message_deleted)
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking message changes.
 
@@ -167,5 +179,11 @@ defmodule HotwirePhoenixDemoChat.Chat do
   """
   def change_message(%Message{} = message, attrs \\ %{}) do
     Message.changeset(message, attrs)
+  end
+
+  defp broadcast_message({:error, _reason} = error, _event), do: error
+  defp broadcast_message({:ok, message}, event) do
+    Phoenix.PubSub.broadcast(HotwirePhoenixDemoChat.PubSub, "room:#{message.room_id}", {event, message})
+    {:ok, message}
   end
 end

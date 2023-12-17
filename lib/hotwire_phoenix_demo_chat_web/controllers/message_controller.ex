@@ -12,7 +12,7 @@ defmodule HotwirePhoenixDemoChatWeb.MessageController do
   end
 
   def create(conn, %{"room_id" => room_id, "message" => message_params}) do
-    case Chat.create_message(Map.merge(message_params, %{"room_id" => room_id})) do
+    case Chat.create_and_broadcast_message(Map.merge(message_params, %{"room_id" => room_id})) do
       {:ok, message} ->
         case get_format(conn) do
           "turbo_stream" ->
@@ -36,7 +36,7 @@ defmodule HotwirePhoenixDemoChatWeb.MessageController do
 
   def delete(conn, %{"id" => id}) do
     message = Chat.get_message!(id)
-    {:ok, _message} = Chat.delete_message(message)
+    {:ok, _message} = Chat.delete_and_broadcast_message(message)
 
     conn
     |> put_flash(:info, "Message deleted successfully.")
