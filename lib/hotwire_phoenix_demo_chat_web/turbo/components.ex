@@ -25,7 +25,7 @@ defmodule HotwirePhoenixDemoChatWeb.Turbo.Components do
     """
   end
 
-  attr :action, :string, values: ["append", "prepend", "replace", "update", "remove", "before", "after"], required: true
+  attr :action, :string, values: ["refresh", "append", "prepend", "replace", "update", "remove", "before", "after"], required: true
   attr :target, :string
   attr :targets, :string
   slot :inner_block
