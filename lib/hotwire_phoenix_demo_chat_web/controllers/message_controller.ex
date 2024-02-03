@@ -4,6 +4,7 @@ defmodule HotwirePhoenixDemoChatWeb.MessageController do
 
   alias HotwirePhoenixDemoChat.Chat
   alias HotwirePhoenixDemoChat.Chat.Message
+  alias HotwirePhoenixDemoChatWeb.PageTurboStream
 
   def new(conn, %{"room_id" => room_id}) do
     changeset = Chat.change_message(%Message{}, %{"room_id" => room_id})
@@ -13,13 +14,22 @@ defmodule HotwirePhoenixDemoChatWeb.MessageController do
   def create(conn, %{"room_id" => room_id, "message" => message_params}) do
     case Chat.create_message(Map.merge(message_params, %{"room_id" => room_id})) do
       {:ok, message} ->
-        conn
-        |> put_flash(:info, "Message created successfully.")
-        |> redirect(to: ~p"/rooms/#{message.room_id}")
+        case get_format(conn) do
+          "turbo_stream" ->
+            conn
+            |> put_view(turbo_stream: PageTurboStream)
+            |> render(:redirect, target: ~p"/rooms/#{message.room_id}")
+
+          _ ->
+            conn
+            |> put_flash(:info, "Message created successfully.")
+            |> redirect(to: ~p"/rooms/#{message.room_id}")
+        end
 
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_status(:unprocessable_entity)
+        |> put_format(:html)
         |> render(:new, changeset: changeset)
     end
   end

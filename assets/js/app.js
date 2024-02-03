@@ -40,3 +40,6 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
+Turbo.StreamActions.redirect = function () {
+  Turbo.visit(this.target)
+}
