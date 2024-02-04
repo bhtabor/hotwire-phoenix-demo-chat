@@ -16,7 +16,7 @@
   </.list>
 </.turbo_frame>
 
-<.table id="messages" rows={@room.messages} row_id={fn message -> "message-#{message.id}" end}>
+<.table id="messages" rows={@room.messages}>
   <:col :let={message} label="Messages"><%= message.content %></:col>
   <:action :let={message}>
     <.link href={~p"/messages/#{message}"} method="delete" data-confirm="Are you sure?">
@@ -25,6 +25,6 @@
   </:action>
 </.table>
 
-<.turbo_frame id="new_message" src={~p"/rooms/#{@room.id}/messages/new"} />
+<.turbo_frame id="new_message" src={~p"/rooms/#{@room.id}/messages/new"} data-turbo-permanent />
 
 <.back navigate={~p"/rooms"}>Back to rooms</.back>

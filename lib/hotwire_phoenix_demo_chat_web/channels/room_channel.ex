@@ -1,7 +1,7 @@
 defmodule HotwirePhoenixDemoChatWeb.RoomChannel do
   use HotwirePhoenixDemoChatWeb, :channel
 
-  alias HotwirePhoenixDemoChatWeb.MessageTurboStream
+  alias HotwirePhoenixDemoChatWeb.PageTurboStream
 
   @impl true
   def join(channel = "room:" <> _room_id, %{"signed_channel" => signed_channel}, socket) do
@@ -18,19 +18,18 @@ defmodule HotwirePhoenixDemoChatWeb.RoomChannel do
   end
 
   @impl true
-  def handle_info({:message_created, message}, socket) do
-    stream = render_to_string(MessageTurboStream, "create", "turbo_stream", message: message)
-    broadcast_turbo_stream_from(socket, stream)
+  def handle_info({:message_created, _message}, socket) do
+    broadcast_refresh_turbo_stream_from(socket)
     {:noreply, socket}
   end
 
-  def handle_info({:message_deleted, message}, socket) do
-    stream = render_to_string(MessageTurboStream, "delete", "turbo_stream", message: message)
-    broadcast_turbo_stream_from(socket, stream)
+  def handle_info({:message_deleted, _message}, socket) do
+    broadcast_refresh_turbo_stream_from(socket)
     {:noreply, socket}
   end
 
-  defp broadcast_turbo_stream_from(socket, stream) do
+  defp broadcast_refresh_turbo_stream_from(socket) do
+    stream = render_to_string(PageTurboStream, "refresh", "turbo_stream", [])
     broadcast_from(socket, "turbo-stream-message", %{ stream: stream })
   end
 end
