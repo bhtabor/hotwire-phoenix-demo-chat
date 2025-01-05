@@ -22,9 +22,8 @@ config :hotwire_phoenix_demo_chat, HotwirePhoenixDemoChatWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "PV7VeX8VqtWqrSqu9DNfpG2EuTeSLaryWmhaYz+r8cmW2W1wVuS8rm4PdZwWgTUm",
   watchers: [
-    esbuild:
-      {Esbuild, :install_and_run, [:hotwire_phoenix_demo_chat, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:hotwire_phoenix_demo_chat, ~w(--watch)]}
+    node: ["esbuild.js", "--watch", cd: Path.expand("../assets", __DIR__)],
+    npx: ["tailwindcss", "--watch", "-i", "css/app.css", "-o", "../priv/static/assets/app.css", cd: Path.expand("../assets", __DIR__)]
   ]
 
 # ## SSL Support
