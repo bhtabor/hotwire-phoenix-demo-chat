@@ -2,9 +2,9 @@
   Room {@room.id}
   <:subtitle>This is a room record from your database.</:subtitle>
   <:actions>
-   <.link href={~p"/rooms/#{@room}/messages/new"}>
+   <.phx_link href={~p"/rooms/#{@room}/messages/new"}>
       <.button>New Message</.button>
-    </.link>
+    </.phx_link>
   </:actions>
 </.header>
 
@@ -15,9 +15,9 @@
 <.table id="messages" rows={@room.messages}>
   <:col :let={message} label="Messages">{message.content}</:col>
   <:action :let={message}>
-    <.link href={~p"/messages/#{message}"} method="delete" data-confirm="Are you sure?">
+    <.phx_link href={~p"/messages/#{message}"} method="delete" data-confirm="Are you sure?">
       Delete
-    </.link>
+    </.phx_link>
   </:action>
 </.table>
 

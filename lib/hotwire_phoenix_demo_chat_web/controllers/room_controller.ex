@@ -19,10 +19,13 @@ defmodule HotwirePhoenixDemoChatWeb.RoomController do
       {:ok, room} ->
         conn
         |> put_flash(:info, "Room created successfully.")
+        |> put_status(:see_other)
         |> redirect(to: ~p"/rooms/#{room}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :new, changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(:new, changeset: changeset)
     end
   end
 
@@ -44,10 +47,13 @@ defmodule HotwirePhoenixDemoChatWeb.RoomController do
       {:ok, room} ->
         conn
         |> put_flash(:info, "Room updated successfully.")
+        |> put_status(:see_other)
         |> redirect(to: ~p"/rooms/#{room}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :edit, room: room, changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(:edit, room: room, changeset: changeset)
     end
   end
 
@@ -57,6 +63,7 @@ defmodule HotwirePhoenixDemoChatWeb.RoomController do
 
     conn
     |> put_flash(:info, "Room deleted successfully.")
+    |> put_status(:see_other)
     |> redirect(to: ~p"/rooms")
   end
 end

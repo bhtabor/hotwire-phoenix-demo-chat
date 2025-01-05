@@ -14,10 +14,13 @@ defmodule HotwirePhoenixDemoChatWeb.MessageController do
       {:ok, message} ->
         conn
         |> put_flash(:info, "Message created successfully.")
+        |> put_status(:see_other)
         |> redirect(to: ~p"/rooms/#{message.room_id}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :new, changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(:new, changeset: changeset)
     end
   end
 
@@ -27,6 +30,7 @@ defmodule HotwirePhoenixDemoChatWeb.MessageController do
 
     conn
     |> put_flash(:info, "Message deleted successfully.")
+    |> put_status(:see_other)
     |> redirect(to: ~p"/rooms/#{message.room_id}")
   end
 end

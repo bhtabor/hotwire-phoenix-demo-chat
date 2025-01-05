@@ -546,6 +546,12 @@ defmodule HotwirePhoenixDemoChatWeb.CoreComponents do
     """
   end
 
+  def phx_link(%{} = assigns) do
+    assigns
+    |> Map.put_new("data-turbo", "false")
+    |> link()
+  end
+
   @doc """
   Renders a back navigation link.
 
@@ -559,13 +565,13 @@ defmodule HotwirePhoenixDemoChatWeb.CoreComponents do
   def back(assigns) do
     ~H"""
     <div class="mt-16">
-      <.link
+      <.phx_link
         navigate={@navigate}
         class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
       >
         <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
         {render_slot(@inner_block)}
-      </.link>
+      </.phx_link>
     </div>
     """
   end
