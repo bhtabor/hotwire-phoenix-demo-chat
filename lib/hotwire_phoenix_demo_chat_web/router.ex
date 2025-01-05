@@ -19,7 +19,10 @@ defmodule HotwirePhoenixDemoChatWeb.Router do
 
     get "/", PageController, :home
 
-    resources "/rooms", RoomController
+    resources "/rooms", RoomController do
+      resources "/messages", MessageController, only: [:new, :create]
+    end
+    resources "/messages", MessageController, only: [:delete]
   end
 
   # Other scopes may use custom stacks.

@@ -27,7 +27,7 @@ defmodule HotwirePhoenixDemoChatWeb.RoomController do
   end
 
   def show(conn, %{"id" => id}) do
-    room = Chat.get_room!(id)
+    room = Chat.get_room!(id) |> Chat.preload_messages()
     render(conn, :show, room: room)
   end
 

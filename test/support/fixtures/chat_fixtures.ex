@@ -17,4 +17,18 @@ defmodule HotwirePhoenixDemoChat.ChatFixtures do
 
     room
   end
+
+  @doc """
+  Generate a message.
+  """
+  def message_fixture(attrs \\ %{}) do
+    {:ok, message} =
+      attrs
+      |> Enum.into(%{
+        content: "some content"
+      })
+      |> HotwirePhoenixDemoChat.Chat.create_message()
+
+    message
+  end
 end
