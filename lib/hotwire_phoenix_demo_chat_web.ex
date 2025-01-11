@@ -39,7 +39,7 @@ defmodule HotwirePhoenixDemoChatWeb do
   def controller do
     quote do
       use Phoenix.Controller,
-        formats: [:html, :json],
+        formats: [:html, :turbo_stream, :json],
         layouts: [html: HotwirePhoenixDemoChatWeb.Layouts]
 
       use Gettext, backend: HotwirePhoenixDemoChatWeb.Gettext

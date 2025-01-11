@@ -26,4 +26,27 @@ defmodule HotwirePhoenixDemoChatWeb.TurboComponents do
     </turbo-frame>
     """
   end
+
+  attr :action, :string, values: ["append", "prepend", "replace", "update", "remove", "before", "after", "refresh"], required: true
+  attr :request_id, :string
+  attr :target, :string
+  attr :targets, :string
+  slot :inner_block
+
+  def turbo_stream(assigns) do
+    extra = assigns_to_attributes(assigns, [:action, :request_id])
+    assigns = assign(assigns, :extra, extra)
+
+    ~H"""
+    <turbo-stream
+      action={@action}
+      request-id={if @action == "refresh", do: @request_id}
+      {@extra}
+    >
+      <template :if={Enum.any?(@inner_block)}>
+        <%= render_slot(@inner_block) %>
+      </template>
+    </turbo-stream>
+    """
+  end
 end
