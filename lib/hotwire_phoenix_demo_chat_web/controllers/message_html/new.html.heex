@@ -3,6 +3,8 @@
   <:subtitle>Use this form to manage message records in your database.</:subtitle>
 </.header>
 
-<.message_form changeset={@changeset} action={~p"/rooms/#{@changeset.changes.room_id}/messages"} />
+<.turbo_frame id={"room-#{@changeset.changes.room_id}-new-message"} target="_top">
+  <.message_form changeset={@changeset} action={~p"/rooms/#{@changeset.changes.room_id}/messages"} />
+</.turbo_frame>
 
 <.back navigate={~p"/rooms/#{@changeset.changes.room_id}"}>Back to room</.back>

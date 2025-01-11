@@ -2,11 +2,13 @@
   Room {@room.id}
   <:subtitle>This is a room record from your database.</:subtitle>
   <:actions>
-   <.phx_link href={~p"/rooms/#{@room}/messages/new"}>
+   <a href={~p"/rooms/#{@room}/messages/new"} data-turbo-frame={"room-#{@room.id}-new-message"}>
       <.button>New Message</.button>
-    </.phx_link>
+    </a>
   </:actions>
 </.header>
+
+<.turbo_frame id={"room-#{@room.id}-new-message"} target="_top" />
 
 <.list>
   <:item title="Name">{@room.name}</:item>
