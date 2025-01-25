@@ -1,4 +1,4 @@
-<.simple_form :let={f} for={@changeset} action={@action}>
+<.simple_form :let={f} for={@changeset} action={@action} data-controller="reset-form" data-action="turbo:submit-end->reset-form#reset">
   <.error :if={@changeset.action}>
     Oops, something went wrong! Please check the errors below.
   </.error>
