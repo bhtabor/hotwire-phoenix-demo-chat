@@ -49,4 +49,18 @@ defmodule HotwirePhoenixDemoChatWeb.TurboComponents do
     </turbo-stream>
     """
   end
+
+  alias HotwirePhoenixDemoChat.Token
+
+  attr :topic, :string, required: true
+
+  def turbo_stream_channel_source(assigns) do
+    ~H"""
+    <turbo-stream-channel-source topic={@topic} signed-topic={signed_topic(@topic)} />
+    """
+  end
+
+  defp signed_topic(topic) do
+    Token.sign(HotwirePhoenixDemoChatWeb.Endpoint, topic)
+  end
 end

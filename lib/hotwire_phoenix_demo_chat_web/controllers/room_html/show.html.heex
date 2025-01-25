@@ -1,3 +1,5 @@
+<.turbo_stream_channel_source topic={"turbo-stream:room-#{@room.id}"} />
+
 <.header>
   Room {@room.id}
   <:subtitle>This is a room record from your database.</:subtitle>
@@ -8,7 +10,7 @@
   </:actions>
 </.header>
 
-<.turbo_frame id={"room-#{@room.id}-new-message"} target="_top" />
+<.turbo_frame id={"room-#{@room.id}-new-message"} target="_top" data-turbo-permanent />
 
 <.list>
   <:item title="Name">{@room.name}</:item>
